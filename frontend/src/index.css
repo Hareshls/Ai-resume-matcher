@@ -425,17 +425,38 @@ body {
 }
 
 .landing-btn {
-  max-width: 300px;
+  max-width: 320px;
   font-size: 1.25rem !important;
   padding: 1.5rem 3rem !important;
   border-radius: 100px !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+}
+
+.landing-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.6s ease-out;
+  pointer-events: none;
+}
+
+.landing-btn:hover::before {
+  transform: scale(1);
 }
 
 .landing-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem; /* Reduced gap */
+  margin-top: 1rem;
 }
 
 .landing-stats {
