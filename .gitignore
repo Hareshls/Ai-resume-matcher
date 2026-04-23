@@ -1,0 +1,23 @@
+# Node
+node_modules/
+dist/
+.eslintcache
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Database
+data/
+
+# Environment Variables (CRITICAL)
+.env
+secret.py
+
+# OS
+.DS_Store
+Thumbs.db
