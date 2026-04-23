@@ -72,7 +72,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Header />
+      {!showLanding && <Header />}
 
       <main>
         <AnimatePresence>
