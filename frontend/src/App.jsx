@@ -25,6 +25,7 @@ const App = () => {
   const [error, setError] = useState('');
   const [previewUrl, setPreviewUrl] = useState(null);
   const [textContent, setTextContent] = useState("");
+  const [showLanding, setShowLanding] = useState(true);
 
   useEffect(() => {
     if (file) {
@@ -96,7 +97,59 @@ const App = () => {
         </AnimatePresence>
 
         <AnimatePresence mode="wait">
-          {!result ? (
+          {showLanding ? (
+            <motion.div
+              key="landing-page"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="landing-container"
+            >
+              <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="landing-content"
+              >
+                <div className="landing-badge">
+                  <Sparkles size={16} /> <span>AI-Powered Career Intelligence</span>
+                </div>
+                <h1 className="landing-title">
+                  Bridge the Gap Between <br />
+                  <span className="text-gradient-cyan">Your Resume & Dream Job</span>
+                </h1>
+                <p className="landing-subtitle">
+                  Our advanced AI conducts a deep audit of your resume against any job description, 
+                  optimizing your bullet points and predicting interview questions in seconds.
+                </p>
+                <div className="landing-actions">
+                  <button 
+                    className="btn-primary landing-btn"
+                    onClick={() => setShowLanding(false)}
+                  >
+                    GET STARTED <Sparkles size={20} />
+                  </button>
+                  <div className="landing-stats">
+                    <div className="stat-item">
+                      <span className="stat-value">99%</span>
+                      <span className="stat-label">Accuracy</span>
+                    </div>
+                    <div className="stat-item">
+                      <span className="stat-value">< 2s</span>
+                      <span className="stat-label">Analysis</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 0.5, scale: 1 }}
+                transition={{ delay: 0.4, duration: 1 }}
+                className="landing-visual-glow"
+              />
+            </motion.div>
+          ) : !result ? (
             <motion.div 
               key="input-view"
               initial={{ opacity: 0, y: 20 }}
@@ -106,6 +159,11 @@ const App = () => {
             >
               {/* Left Side: Inputs */}
               <div style={{ display: 'grid', gap: '2rem' }}>
+                <div className="view-header">
+                  <button className="back-link" onClick={() => setShowLanding(true)}>← Back</button>
+                  <h2 className="section-title">Upload & Analyze</h2>
+                </div>
+                
                 <ResumeInput 
                   file={file} 
                   onFileChange={(f) => { setFile(f); setError(''); }} 
