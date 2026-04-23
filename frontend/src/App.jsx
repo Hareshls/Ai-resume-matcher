@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  AlertCircle, RefreshCcw, Sparkles
+  AlertCircle, RefreshCcw, Sparkles, Search, Bell, User, Zap, Star, Tag, Users, ChevronDown
 } from 'lucide-react';
 
 // Components
@@ -76,6 +76,27 @@ const App = () => {
 
   return (
     <div className="app-container">
+      <div className="animated-bg">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
+        
+        <div className="particle-container">
+          {[...Array(20)].map((_, i) => (
+            <div 
+              key={i} 
+              className="particle" 
+              style={{ 
+                left: `${Math.random() * 100}%`, 
+                width: `${Math.random() * 4 + 1}px`,
+                height: `${Math.random() * 4 + 1}px`,
+                animationDelay: `${Math.random() * 10}s`,
+                animationDuration: `${Math.random() * 5 + 10}s`
+              }}
+            ></div>
+          ))}
+        </div>
+      </div>
       {!showLanding && <Header />}
 
       <main>
@@ -109,31 +130,42 @@ const App = () => {
               exit={{ opacity: 0, y: -20 }}
               className="landing-container"
             >
+
+
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
                 className="landing-content"
               >
+
+
                 <div className="landing-badge">
-                  <Sparkles size={16} /> <span>AI-Powered Career Intelligence</span>
+                  <Zap size={14} fill="var(--primary)" color="var(--primary)" /> <span>AI-Powered Career Intelligence</span>
                 </div>
+
                 <h1 className="landing-title">
-                  Bridge the Gap Between <br />
-                  <span className="text-gradient-cyan">Your Resume & Dream Job</span>
+                  Free, Powerful, and <br />
+                  <span className="text-gradient-cyan">Guided by Advanced AI</span>
                 </h1>
+                
                 <p className="landing-subtitle">
-                  Our advanced AI conducts a deep audit of your resume against any job description, 
-                  optimizing your bullet points and predicting interview questions in seconds.
+                  Join thousands of professionals leveling up their careers with instant AI audits, 
+                  live resume optimization, and a supportive career community. Everything you 
+                  need to apply with confidence — 100% free.
                 </p>
+
                 <div className="landing-actions">
                   <button 
                     className="btn-primary landing-btn"
                     onClick={() => setShowLanding(false)}
+                    style={{ borderRadius: '100px !important', padding: '0.75rem 2rem', fontSize: '0.95rem', width: 'fit-content' }}
                   >
-                    GET STARTED <Sparkles size={20} />
+                    GET STARTED <Sparkles size={16} />
                   </button>
                 </div>
+
+
               </motion.div>
 
               <motion.div 

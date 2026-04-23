@@ -62,21 +62,25 @@ async def get_ai_analysis(resume_text, job_description):
     
     Provide the analysis in JSON format ONLY:
     {{
-        "match_score": (integer 0-100),
-        "missing_skills": ["Java", "Kubernetes"], (Strictly the result of your deep audit)
+        "match_score": 85,
+        "missing_skills": ["Skill1", "Skill2"],
         "optimized_bullets": [
-             "Spearheaded the integration of [Missing Skill] to optimize backend latency by 15%",
-             "Orchestrated [Missing Skill] deployments ensuring 99.9% uptime"
-        ], (Professional bullet points to fix the missing skills)
-        "interview_prep": [
-            "How would you handle [Missing Skill] in a high-concurrency production environment?",
-            "Explain a scenario where you'd prefer [Tool A] over [Missing Skill]?"
+             "Integrated [Skill] to improve performance by X%",
+             "Led [Skill] implementation for Y project"
         ],
-        "salary_range": "e.g. $100k - $120k",
+        "interview_prep": [
+            "How do you handle [Skill] in production?",
+            "Compare [Skill] with [Alternative]?"
+        ],
+        "salary_range": "$100k - $120k",
         "radar_data": [
-            {{"subject": "React", "A": 80, "B": 100, "fullMark": 100}},
-            {{"subject": "Node.js", "A": 40, "B": 90, "fullMark": 100}}
-        ], (List of 6 key skills comparing Resume [A] vs Job [B])
+            {{"subject": "SkillA", "A": 80, "B": 100, "fullMark": 100}},
+            {{"subject": "SkillB", "A": 40, "B": 90, "fullMark": 100}},
+            {{"subject": "SkillC", "A": 60, "B": 80, "fullMark": 100}},
+            {{"subject": "SkillD", "A": 70, "B": 100, "fullMark": 100}},
+            {{"subject": "SkillE", "A": 50, "B": 95, "fullMark": 100}},
+            {{"subject": "SkillF", "A": 90, "B": 100, "fullMark": 100}}
+        ],
         "suggestions": ["suggestion1", "suggestion2"],
         "summary": "Match summary.",
         "recommended_roles": [
@@ -88,9 +92,12 @@ async def get_ai_analysis(resume_text, job_description):
     
     try:
         chat_completion = await groq_client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "system", "content": "You are an expert ATS (Applicant Tracking System) auditor. Your output must be STICKLY valid JSON. No preamble, no conversational text, no markdown blocks."},
+                {"role": "user", "content": prompt}
+            ],
             model="llama-3.1-8b-instant",
-            temperature=0,
+            temperature=0.1,
             response_format={"type": "json_object"}
         )
         return json.loads(chat_completion.choices[0].message.content)
