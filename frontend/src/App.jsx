@@ -116,7 +116,7 @@ const App = () => {
                 </div>
                 <h1 className="landing-title">
                   Bridge the gap between <br />
-                  <span className="text-gradient-cyan">your resume and your dream job.</span>
+                  your resume and your dream job.
                 </h1>
                 <p className="landing-subtitle">
                   Our smart AI analyzes your resume against any job description, 
