@@ -72,6 +72,24 @@ const App = () => {
 
   return (
     <div className="app-container">
+      {showLanding && (
+        <nav className="navbar">
+          <div className="nav-logo">
+            <Sparkles size={24} className="text-gradient-purple" />
+            <span>AI Matcher</span>
+          </div>
+          <div className="nav-links">
+            <a href="#" className="nav-link">Features</a>
+            <a href="#" className="nav-link">Solutions</a>
+            <a href="#" className="nav-link">Pricing</a>
+          </div>
+          <div className="nav-actions">
+            <span className="nav-btn-text">Sign in</span>
+            <button className="nav-btn-primary" onClick={() => setShowLanding(false)}>Create account</button>
+          </div>
+        </nav>
+      )}
+
       {!showLanding && <Header />}
 
       <main>
@@ -112,32 +130,37 @@ const App = () => {
                 className="landing-content"
               >
                 <div className="landing-badge">
-                  <Sparkles size={16} /> <span>AI-Powered Career Intelligence</span>
+                  <span>Introducing Matcher 2.0</span>
                 </div>
                 <h1 className="landing-title">
-                  Analyze Smarter. <br />
-                  <span className="text-gradient-cyan">Land Faster.</span>
+                  Match Resumes Smarter <br />
+                  <span className="text-gradient-purple">Land Jobs Faster</span>
                 </h1>
                 <p className="landing-subtitle">
-                  Our advanced AI conducts a deep audit of your resume against any job description, 
-                  optimizing your bullet points and predicting interview questions in seconds.
+                  AI Matcher transforms your career path into an organized workflow. 
+                  Track progress, optimize skills, and land roles in one intuitive dashboard.
                 </p>
                 <div className="landing-actions">
                   <button 
                     className="btn-primary landing-btn"
                     onClick={() => setShowLanding(false)}
                   >
-                    GET STARTED <Sparkles size={20} />
+                    Get started now →
+                  </button>
+                  <button className="btn-secondary">
+                    Watch the demo
                   </button>
                 </div>
               </motion.div>
 
               <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.5, scale: 1 }}
-                transition={{ delay: 0.4, duration: 1 }}
-                className="landing-visual-glow"
-              />
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="dashboard-preview"
+              >
+                <img src="/src/assets/dashboard_mockup.png" alt="Dashboard Preview" className="dashboard-img" />
+              </motion.div>
             </motion.div>
           ) : !result ? (
             <motion.div 
