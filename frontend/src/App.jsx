@@ -135,7 +135,7 @@ const App = () => {
                       <span className="stat-label">Accuracy</span>
                     </div>
                     <div className="stat-item">
-                      <span className="stat-value">< 2s</span>
+                      <span className="stat-value">&lt; 2s</span>
                       <span className="stat-label">Analysis</span>
                     </div>
                   </div>
