@@ -16,6 +16,10 @@ import SkillGaps from './components/SkillGaps';
 import RoleCompass from './components/RoleCompass';
 import InterviewPrep from './components/InterviewPrep';
 
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000'
+  : 'https://ai-resume-matcher-klto.onrender.com';
+
 const App = () => {
   const [file, setFile] = useState(null);
   const [jobFile, setJobFile] = useState(null);
@@ -60,7 +64,7 @@ const App = () => {
     if (jobDescription) formData.append('job_description', jobDescription);
 
     try {
-      const response = await axios.post('http://localhost:8000/match', formData);
+      const response = await axios.post(`${API_URL}/match`, formData);
       setResult(response.data);
       setError('');
     } catch (err) {
