@@ -36,12 +36,19 @@ body {
   background-attachment: fixed;
 }
 
+body:has(.landing-container) {
+  overflow: hidden;
+}
+
 /* --- Layout System --- */
 .app-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem; /* Removed top/bottom padding */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .title-section {
@@ -370,14 +377,15 @@ body {
 
 /* --- Landing Page --- */
 .landing-container {
-  min-height: calc(80vh - 100px);
+  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
-  padding: 4rem 1rem;
+  overflow: hidden;
 }
 
 .landing-content {
