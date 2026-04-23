@@ -149,11 +149,6 @@ const App = () => {
             >
               {/* Left Side: Inputs */}
               <div style={{ display: 'grid', gap: '2rem' }}>
-                <div className="view-header">
-                  <button className="back-link" onClick={() => setShowLanding(true)}>← Back</button>
-                  <h2 className="section-title">Upload & Analyze</h2>
-                </div>
-                
                 <ResumeInput 
                   file={file} 
                   onFileChange={(f) => { setFile(f); setError(''); }} 
