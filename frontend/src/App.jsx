@@ -129,16 +129,6 @@ const App = () => {
                   >
                     GET STARTED <Sparkles size={20} />
                   </button>
-                  <div className="landing-stats">
-                    <div className="stat-item">
-                      <span className="stat-value">99%</span>
-                      <span className="stat-label">Accuracy</span>
-                    </div>
-                    <div className="stat-item">
-                      <span className="stat-value">&lt; 2s</span>
-                      <span className="stat-label">Analysis</span>
-                    </div>
-                  </div>
                 </div>
               </motion.div>
 
