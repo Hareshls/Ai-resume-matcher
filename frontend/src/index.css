@@ -256,11 +256,35 @@ body:has(.landing-container) {
 
 @media (max-width: 640px) {
   .app-container {
-    padding: 1rem;
+    padding: 0 1rem;
   }
   
-  .title-section {
-    margin-bottom: 2.5rem;
+  .landing-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+  }
+
+  body:has(.landing-container) {
+    overflow: auto; /* Allow scroll on mobile landing */
+  }
+
+  .landing-title {
+    font-size: 2.5rem;
+  }
+
+  .text-gradient-cyan {
+    white-space: normal; /* Allow wrap on very small screens */
+  }
+
+  .landing-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .landing-btn {
+    width: 100%;
+    max-width: none;
   }
 
   .role-grid {
@@ -268,7 +292,7 @@ body:has(.landing-container) {
   }
 
   .glass-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 }
 
