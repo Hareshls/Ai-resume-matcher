@@ -382,7 +382,7 @@ body {
 
 .landing-content {
   z-index: 2;
-  max-width: 850px;
+  max-width: 1000px; /* Increased from 850px */
 }
 
 .landing-badge {
@@ -414,6 +414,7 @@ body {
   background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap; /* Keep this part on one line */
 }
 
 .landing-subtitle {

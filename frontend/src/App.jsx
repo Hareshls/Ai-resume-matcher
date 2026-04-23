@@ -115,12 +115,12 @@ const App = () => {
                   <Sparkles size={16} /> <span>AI-Powered Career Intelligence</span>
                 </div>
                 <h1 className="landing-title">
-                  Bridge the gap between <br />
-                  your resume and your dream job.
+                  Bridge the Gap Between <br />
+                  <span className="text-gradient-cyan">Your Resume & Dream Job</span>
                 </h1>
                 <p className="landing-subtitle">
-                  Our smart AI analyzes your resume against any job description, 
-                  refines your bullet points, and predicts interview questions—all in seconds.
+                  Our advanced AI conducts a deep audit of your resume against any job description, 
+                  optimizing your bullet points and predicting interview questions in seconds.
                 </p>
                 <div className="landing-actions">
                   <button 
