@@ -47,7 +47,7 @@ async def get_ai_analysis(resume_text, job_description):
         return {"match_score": 0, "missing_skills": [], "suggestions": [], "summary": "No API Key"}
 
     prompt = f"""
-    Internal Objective: DEEP AUDIT of resume against job description. 
+    Internal Objective: Perform a rigorous ATS (Applicant Tracking System) audit of the provided resume against the job description.
     
     Resume Text:
     {resume_text}
@@ -55,37 +55,46 @@ async def get_ai_analysis(resume_text, job_description):
     Job Description Text:
     {job_description}
     
-    Instruction for AI:
-    1. EXHAUSTIVELY list every technical tool, language, and framework mentioned in the Job Description.
-    2. CHECK which of those are specifically missing or not demonstrated in the Resume Text.
-    3. OUTPUT only those MISSING items as short 1-2 word keywords.
-    
+    Scoring Rubric (0-100):
+    1. Technical Skills Match (50 points): Percentage of required tools, languages, and frameworks present in the resume.
+    2. Experience & Role Match (30 points): Alignment of previous roles and years of experience with the JD requirements.
+    3. Education & Certifications (10 points): Matching degrees or specific certifications.
+    4. Keywords & Context (10 points): Proper use of industry-specific terminology.
+
+    Instructions:
+    1. FIRST, perform an internal step-by-step calculation based on the rubric.
+    2. EXHAUSTIVELY extract all required skills from the Job Description.
+    3. Identify which of these are MISSING or weak in the Resume.
+    4. Calculate the 'match_score' strictly based on the rubric.
+    5. Ensure the analysis is objective and identical for the same input.
+
     Provide the analysis in JSON format ONLY:
     {{
-        "match_score": 85,
-        "missing_skills": ["Skill1", "Skill2"],
+        "calculation_reasoning": "Internal step-by-step breakdown of the score based on the rubric",
+        "match_score": <calculated_integer_between_0_100>,
+        "missing_skills": ["List of 3-7 specific missing technical skills"],
         "optimized_bullets": [
-             "Integrated [Skill] to improve performance by X%",
-             "Led [Skill] implementation for Y project"
+             "Action-oriented bullet points incorporating missing keywords",
+             "Example: Leveraged [Missing Skill] to optimize [Process]..."
         ],
         "interview_prep": [
-            "How do you handle [Skill] in production?",
-            "Compare [Skill] with [Alternative]?"
+            "Specific technical question based on the JD requirements",
+            "Behavioral question relevant to the role"
         ],
-        "salary_range": "$100k - $120k",
+        "salary_range": "Estimated based on JD and Role (e.g., $90k - $120k)",
         "radar_data": [
-            {{"subject": "SkillA", "A": 80, "B": 100, "fullMark": 100}},
-            {{"subject": "SkillB", "A": 40, "B": 90, "fullMark": 100}},
-            {{"subject": "SkillC", "A": 60, "B": 80, "fullMark": 100}},
-            {{"subject": "SkillD", "A": 70, "B": 100, "fullMark": 100}},
-            {{"subject": "SkillE", "A": 50, "B": 95, "fullMark": 100}},
-            {{"subject": "SkillF", "A": 90, "B": 100, "fullMark": 100}}
+            {{"subject": "Technical", "A": <score>, "B": 100, "fullMark": 100}},
+            {{"subject": "Experience", "A": <score>, "B": 100, "fullMark": 100}},
+            {{"subject": "Education", "A": <score>, "B": 100, "fullMark": 100}},
+            {{"subject": "Keywords", "A": <score>, "B": 100, "fullMark": 100}},
+            {{"subject": "Soft Skills", "A": <score>, "B": 100, "fullMark": 100}},
+            {{"subject": "Overall", "A": <score>, "B": 100, "fullMark": 100}}
         ],
-        "suggestions": ["suggestion1", "suggestion2"],
-        "summary": "Match summary.",
+        "suggestions": ["3 actionable tips to improve the resume match"],
+        "summary": "A 2-sentence professional summary of the match quality.",
         "recommended_roles": [
-            {{"role": "Title", "match": "90%", "reason": "Why?"}},
-            {{"role": "Title", "match": "75%", "reason": "Why?"}}
+            {{"role": "Primary Target Role", "match": "90%", "reason": "Close alignment with skill X and Y"}},
+            {{"role": "Alternative Role", "match": "70%", "reason": "Strong in X but lacks Y"}}
         ]
     }}
     """
@@ -93,11 +102,14 @@ async def get_ai_analysis(resume_text, job_description):
     try:
         chat_completion = await groq_client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "You are an expert ATS (Applicant Tracking System) auditor. Your output must be STICKLY valid JSON. No preamble, no conversational text, no markdown blocks."},
+                {"role": "system", "content": "You are a senior technical recruiter and ATS specialist. Your task is to provide objective, consistent, and data-driven resume analysis. Output MUST be valid JSON only. Do not hallucinate scores; follow the rubric strictly."},
                 {"role": "user", "content": prompt}
             ],
             model="llama-3.1-8b-instant",
-            temperature=0.1,
+            temperature=0,
+            seed=42,
+            top_p=1,
+            max_tokens=4096,
             response_format={"type": "json_object"}
         )
         return json.loads(chat_completion.choices[0].message.content)
@@ -144,7 +156,7 @@ async def match_resume(
     else:
         extracted_job_text = job_description
 
-    analysis = await get_ai_analysis(extracted_resume_text, extracted_job_text)
+    analysis = await get_ai_analysis(extracted_resume_text.strip(), extracted_job_text.strip())
     
     # Metadata
     analysis["filename"] = resume_file.filename if resume_file else "Manual Input"

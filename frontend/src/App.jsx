@@ -15,6 +15,7 @@ import ResumeOptimizer from './components/ResumeOptimizer';
 import SkillGaps from './components/SkillGaps';
 import RoleCompass from './components/RoleCompass';
 import InterviewPrep from './components/InterviewPrep';
+import ColorBends from './components/ColorBends';
 
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8000'
@@ -76,26 +77,21 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <div className="animated-bg">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-        
-        <div className="particle-container">
-          {[...Array(20)].map((_, i) => (
-            <div 
-              key={i} 
-              className="particle" 
-              style={{ 
-                left: `${Math.random() * 100}%`, 
-                width: `${Math.random() * 4 + 1}px`,
-                height: `${Math.random() * 4 + 1}px`,
-                animationDelay: `${Math.random() * 10}s`,
-                animationDuration: `${Math.random() * 5 + 10}s`
-              }}
-            ></div>
-          ))}
-        </div>
+      <div className="animated-bg" style={{ opacity: 0.6 }}>
+        <ColorBends 
+          colors={["#0ea5e9", "#22d3ee", "#0f172a", "#3b82f6"]}
+          rotation={45}
+          speed={0.15}
+          scale={1.2}
+          frequency={1.5}
+          warpStrength={0.8}
+          mouseInfluence={0.5}
+          noise={0.1}
+          parallax={0.3}
+          iterations={2}
+          intensity={1.2}
+          bandWidth={5}
+        />
       </div>
       {!showLanding && <Header />}
 
