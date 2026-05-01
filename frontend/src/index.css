@@ -277,32 +277,43 @@ body:has(.landing-container) {
   }
 
   .landing-title {
-    font-size: clamp(1.75rem, 8vw, 2.25rem);
-    line-height: 1.2;
-    padding: 0 1rem;
-    max-width: 350px;
+    font-size: clamp(1.85rem, 9vw, 2.25rem);
+    line-height: 1.1;
+    padding: 0 1.5rem;
+    max-width: 100%;
     margin: 0 auto 1.5rem;
+    text-align: center;
   }
 
   .text-gradient-cyan {
-    display: inline-block;
-    margin-top: 0.5rem;
+    display: block;
+    margin-top: 0.25rem;
   }
 
   .landing-subtitle {
     font-size: 0.95rem;
-    line-height: 1.6;
-    padding: 0 1.5rem;
-    max-width: 380px;
+    line-height: 1.5;
+    padding: 0 2rem;
+    max-width: 100%;
     margin: 0 auto 2.5rem;
-    opacity: 0.9;
+    text-align: center;
+  }
+
+  .landing-community-compact {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+
+  .community-avatars-small {
+    justify-content: center;
   }
 
   .landing-btn {
-    width: 85%;
-    max-width: 280px;
-    padding: 0.9rem 1.5rem;
-    font-size: 0.9rem;
+    width: auto;
+    min-width: 200px;
+    margin: 0 auto;
   }
 
   .role-grid {
