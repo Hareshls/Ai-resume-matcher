@@ -260,8 +260,16 @@ body:has(.landing-container) {
   .landing-container {
     height: auto;
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 4rem 1rem;
     overflow-y: auto;
+  }
+
+  .preview-container {
+    min-height: 400px;
+  }
+
+  .main-grid {
+    gap: 1.5rem;
   }
 
   body:has(.landing-container) {
@@ -269,20 +277,32 @@ body:has(.landing-container) {
   }
 
   .landing-title {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 1.2;
+    padding: 0 1rem;
+    max-width: 350px;
+    margin: 0 auto 1.5rem;
   }
 
   .text-gradient-cyan {
-    white-space: normal; /* Allow wrap on very small screens */
+    display: inline-block;
+    margin-top: 0.5rem;
   }
 
   .landing-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 1.5rem;
+    max-width: 380px;
+    margin: 0 auto 2.5rem;
+    opacity: 0.9;
   }
 
   .landing-btn {
-    width: 100%;
-    max-width: none;
+    width: 85%;
+    max-width: 280px;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.9rem;
   }
 
   .role-grid {
