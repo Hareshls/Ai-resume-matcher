@@ -252,7 +252,7 @@ body:has(.landing-container) {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 850px) {
   .app-container {
     padding: 0 1rem;
   }
@@ -260,8 +260,18 @@ body:has(.landing-container) {
   .landing-container {
     height: auto;
     min-height: 100vh;
-    padding: 4rem 1rem;
+    padding: 3rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow-y: auto;
+  }
+
+  .landing-content {
+    text-align: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
   }
 
   .preview-container {
@@ -270,6 +280,7 @@ body:has(.landing-container) {
 
   .main-grid {
     gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
 
   body:has(.landing-container) {
