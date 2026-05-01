@@ -87,6 +87,8 @@ JD: {job_description[:3000]}
             ],
             model="llama-3.3-70b-versatile",
             temperature=0,
+            seed=42,
+            top_p=0.1,
             max_tokens=2000,
             response_format={"type": "json_object"}
         )
