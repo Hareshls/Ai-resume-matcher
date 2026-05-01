@@ -288,17 +288,17 @@ body:has(.landing-container) {
   }
 
   .landing-title {
-    font-size: clamp(1.85rem, 9vw, 2.25rem);
-    line-height: 1.1;
-    padding: 0 1.5rem;
+    font-size: clamp(1.75rem, 8vw, 2.1rem);
+    line-height: 1.2;
+    padding: 0 1rem;
     max-width: 100%;
     margin: 0 auto 1.5rem;
     text-align: center;
   }
 
   .text-gradient-cyan {
-    display: block;
-    margin-top: 0.25rem;
+    display: inline;
+    font-size: 0.85em; /* Make it slightly smaller than the rest of the title */
   }
 
   .landing-subtitle {
