@@ -81,16 +81,16 @@ const App = () => {
         <ColorBends 
           colors={["#0ea5e9", "#22d3ee", "#0f172a", "#3b82f6"]}
           rotation={45}
-          speed={0.15}
-          scale={1.2}
-          frequency={1.5}
-          warpStrength={0.8}
-          mouseInfluence={0.5}
+          speed={showLanding ? 0.25 : 0}
+          scale={showLanding ? 1.2 : 1}
+          frequency={showLanding ? 1.5 : 0}
+          warpStrength={showLanding ? 0.8 : 0}
+          mouseInfluence={0}
           noise={0.1}
-          parallax={0.3}
-          iterations={2}
-          intensity={1.2}
-          bandWidth={5}
+          parallax={showLanding ? 0.3 : 0}
+          iterations={showLanding ? 3 : 1}
+          intensity={showLanding ? 1.2 : 0.5}
+          bandWidth={showLanding ? 4 : 2}
         />
       </div>
       {!showLanding && <Header />}
@@ -126,6 +126,15 @@ const App = () => {
               exit={{ opacity: 0, y: -20 }}
               className="landing-container"
             >
+              <div className="particle-container">
+                <div className="particle" style={{ left: '10%', width: '10px', height: '10px', animationDelay: '0s' }}></div>
+                <div className="particle" style={{ left: '30%', width: '15px', height: '15px', animationDelay: '2s' }}></div>
+                <div className="particle" style={{ left: '50%', width: '8px', height: '8px', animationDelay: '5s' }}></div>
+                <div className="particle" style={{ left: '70%', width: '12px', height: '12px', animationDelay: '1s' }}></div>
+                <div className="particle" style={{ left: '90%', width: '6px', height: '6px', animationDelay: '7s' }}></div>
+                <div className="particle" style={{ left: '20%', width: '14px', height: '14px', animationDelay: '4s' }}></div>
+                <div className="particle" style={{ left: '80%', width: '10px', height: '10px', animationDelay: '8s' }}></div>
+              </div>
 
 
               <motion.div 
@@ -142,23 +151,31 @@ const App = () => {
 
                 <h1 className="landing-title">
                   Free, Powerful, and <br />
-                  <span className="text-gradient-cyan">Guided by Advanced AI</span>
+                  <span className="text-gradient-cyan gradient-move">Guided by Advanced AI</span>
                 </h1>
                 
                 <p className="landing-subtitle">
-                  Join thousands of professionals leveling up their careers with instant AI audits, 
-                  live resume optimization, and a supportive career community. Everything you 
-                  need to apply with confidence — 100% free.
+                  Join thousands of professionals leveling up with instant AI audits and live optimization. 
+                  Everything you need to apply with confidence — 100% free.
                 </p>
 
                 <div className="landing-actions">
                   <button 
                     className="btn-primary landing-btn"
                     onClick={() => setShowLanding(false)}
-                    style={{ borderRadius: '100px !important', padding: '0.75rem 2rem', fontSize: '0.95rem', width: 'fit-content' }}
                   >
                     GET STARTED <Sparkles size={16} />
                   </button>
+                </div>
+
+                <div className="landing-community-compact">
+                  <div className="community-avatars-small">
+                    <div className="avatar-small">JD</div>
+                    <div className="avatar-small">AM</div>
+                    <div className="avatar-small">RK</div>
+                    <div className="avatar-small">+10k</div>
+                  </div>
+                  <span>Join 10,000+ professionals growing together</span>
                 </div>
 
 
@@ -172,13 +189,7 @@ const App = () => {
               />
             </motion.div>
           ) : !result ? (
-            <motion.div 
-              key="input-view"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="main-grid"
-            >
+            <div key="input-view" className="main-grid">
               {/* Left Side: Inputs */}
               <div style={{ display: 'grid', gap: '2rem' }}>
                 <ResumeInput 
@@ -221,15 +232,9 @@ const App = () => {
                   textContent={textContent}
                 />
               </div>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div 
-              key="result-view"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, y: 20 }}
-              style={{ display: 'grid', gap: '2rem' }}
-            >
+            <div key="result-view" style={{ display: 'grid', gap: '2rem' }}>
               <MatchScore result={result} onReset={() => setResult(null)} />
 
               <div className="main-grid" style={{ marginBottom: '2rem' }}>
@@ -239,7 +244,7 @@ const App = () => {
               </div>
 
               <InterviewPrep interviewPrep={result.interview_prep} />
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>
       </main>

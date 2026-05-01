@@ -30,7 +30,7 @@ const Header = () => {
         AI <span style={{ color: '#fff' }}>Matcher</span>
       </h1>
       <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '20px auto' }}>
-        AI-driven semantic analysis to align your professional profile with top job opportunities.
+        Level up with instant AI audits and resume optimization — 100% free.
       </p>
     </header>
   );

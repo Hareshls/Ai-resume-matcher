@@ -46,70 +46,48 @@ async def get_ai_analysis(resume_text, job_description):
     if not groq_client:
         return {"match_score": 0, "missing_skills": [], "suggestions": [], "summary": "No API Key"}
 
-    prompt = f"""
-    Internal Objective: Perform a rigorous ATS (Applicant Tracking System) audit of the provided resume against the job description.
-    
-    Resume Text:
-    {resume_text}
-    
-    Job Description Text:
-    {job_description}
-    
-    Scoring Rubric (0-100):
-    1. Technical Skills Match (50 points): Percentage of required tools, languages, and frameworks present in the resume.
-    2. Experience & Role Match (30 points): Alignment of previous roles and years of experience with the JD requirements.
-    3. Education & Certifications (10 points): Matching degrees or specific certifications.
-    4. Keywords & Context (10 points): Proper use of industry-specific terminology.
-
-    Instructions:
-    1. FIRST, perform an internal step-by-step calculation based on the rubric.
-    2. EXHAUSTIVELY extract all required skills from the Job Description.
-    3. Identify which of these are MISSING or weak in the Resume.
-    4. Calculate the 'match_score' strictly based on the rubric.
-    5. Ensure the analysis is objective and identical for the same input.
-
-    Provide the analysis in JSON format ONLY:
-    {{
-        "calculation_reasoning": "Internal step-by-step breakdown of the score based on the rubric",
-        "match_score": <calculated_integer_between_0_100>,
-        "missing_skills": ["List of 3-7 specific missing technical skills"],
-        "optimized_bullets": [
-             "Action-oriented bullet points incorporating missing keywords",
-             "Example: Leveraged [Missing Skill] to optimize [Process]..."
-        ],
-        "interview_prep": [
-            "Specific technical question based on the JD requirements",
-            "Behavioral question relevant to the role"
-        ],
-        "salary_range": "Estimated based on JD and Role (e.g., $90k - $120k)",
-        "radar_data": [
-            {{"subject": "Technical", "A": <score>, "B": 100, "fullMark": 100}},
-            {{"subject": "Experience", "A": <score>, "B": 100, "fullMark": 100}},
-            {{"subject": "Education", "A": <score>, "B": 100, "fullMark": 100}},
-            {{"subject": "Keywords", "A": <score>, "B": 100, "fullMark": 100}},
-            {{"subject": "Soft Skills", "A": <score>, "B": 100, "fullMark": 100}},
-            {{"subject": "Overall", "A": <score>, "B": 100, "fullMark": 100}}
-        ],
-        "suggestions": ["3 actionable tips to improve the resume match"],
-        "summary": "A 2-sentence professional summary of the match quality.",
-        "recommended_roles": [
-            {{"role": "Primary Target Role", "match": "90%", "reason": "Close alignment with skill X and Y"}},
-            {{"role": "Alternative Role", "match": "70%", "reason": "Strong in X but lacks Y"}}
-        ]
-    }}
-    """
+    # Model logic moved to chat_completion call for strictness
     
     try:
         chat_completion = await groq_client.chat.completions.create(
             messages=[
-                {"role": "system", "content": "You are a senior technical recruiter and ATS specialist. Your task is to provide objective, consistent, and data-driven resume analysis. Output MUST be valid JSON only. Do not hallucinate scores; follow the rubric strictly."},
-                {"role": "user", "content": prompt}
+                {"role": "system", "content": "You are a senior recruiter. Your only output is valid JSON. No conversational text. No preamble."},
+                {"role": "user", "content": f"""Analyze this resume against the JD using this RUBRIC:
+1. Technical Skills (50pts): Match of tools/languages.
+2. Experience (30pts): Role and seniority alignment.
+3. Education (10pts): Degree match.
+4. Context (10pts): Industry terminology.
+
+Return ONLY a JSON object:
+{{
+    "calculation_reasoning": "Detailed breakdown of points for each rubric category",
+    "match_score": <total_points_out_of_100>,
+    "missing_skills": ["Up to 5 technical gaps"],
+    "optimized_bullets": ["3 bullets using missing keywords"],
+    "interview_prep": ["1 technical, 1 behavioral question"],
+    "salary_range": "e.g. $100k - $140k",
+    "radar_data": [
+        {{"subject": "Technical", "A": <0-100>, "B": 100, "fullMark": 100}},
+        {{"subject": "Experience", "A": <0-100>, "B": 100, "fullMark": 100}},
+        {{"subject": "Education", "A": <0-100>, "B": 100, "fullMark": 100}},
+        {{"subject": "Keywords", "A": <0-100>, "B": 100, "fullMark": 100}},
+        {{"subject": "Soft Skills", "A": <0-100>, "B": 100, "fullMark": 100}},
+        {{"subject": "Overall", "A": <score>, "B": 100, "fullMark": 100}}
+    ],
+    "suggestions": ["3 actionable tips"],
+    "summary": "2-sentence professional overview",
+    "recommended_roles": [
+        {{"role": "Title", "match": "XX%", "reason": "alignment logic"}}
+    ]
+}}
+
+Resume: {resume_text[:3000]}
+JD: {job_description[:3000]}
+"""}
             ],
-            model="llama-3.1-8b-instant",
+            model="llama-3.3-70b-versatile",
             temperature=0,
-            seed=42,
-            top_p=1,
-            max_tokens=4096,
+            max_tokens=2000,
             response_format={"type": "json_object"}
         )
         return json.loads(chat_completion.choices[0].message.content)
