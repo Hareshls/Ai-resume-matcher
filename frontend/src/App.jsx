@@ -155,8 +155,7 @@ const App = () => {
                 </h1>
                 
                 <p className="landing-subtitle">
-                  Join thousands of professionals leveling up with instant AI audits and live optimization. 
-                  Everything you need to apply with confidence — 100% free.
+                  Instantly analyze your resume against any job description to identify critical skill gaps and optimize your application — 100% free.
                 </p>
 
                 <div className="landing-actions">
@@ -168,15 +167,7 @@ const App = () => {
                   </button>
                 </div>
 
-                <div className="landing-community-compact">
-                  <div className="community-avatars-small">
-                    <div className="avatar-small">JD</div>
-                    <div className="avatar-small">AM</div>
-                    <div className="avatar-small">RK</div>
-                    <div className="avatar-small">+10k</div>
-                  </div>
-                  <span>Join 10,000+ professionals growing together</span>
-                </div>
+
 
 
               </motion.div>
