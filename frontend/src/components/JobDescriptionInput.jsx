@@ -1,52 +1,80 @@
-import React from 'react';
-import { Upload, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { Upload, Briefcase } from 'lucide-react';
 
 const JobDescriptionInput = ({ jobFile, jobDescription, onJobFileChange, onRemoveJobFile, onDescriptionChange }) => {
+  const [mode, setMode] = useState('text'); // 'file' or 'text'
+
   return (
-    <div className="glass-card">
-      <h3 className="section-title">
-        <span style={{ color: 'var(--accent-blue)' }}>02.</span> Job Description
-      </h3>
-      
-      {/* JD File Option */}
-      <div 
-        className="upload-zone"
-        onClick={() => !jobFile && document.getElementById('job-upload').click()}
-        style={{ 
-          borderColor: jobFile ? 'var(--primary)' : 'var(--glass-border)',
-          background: jobFile ? 'rgba(14, 165, 233, 0.05)' : 'rgba(0,0,0,0.1)',
-          padding: '1rem',
-          marginBottom: '1rem'
-        }}
-      >
-        <input 
-          id="job-upload" 
-          type="file" 
-          onChange={(e) => onJobFileChange(e.target.files[0])} 
-          style={{ display: 'none' }} 
-          accept=".pdf,.txt" 
-        />
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-          {jobFile ? <FileText size={18} style={{ color: 'var(--primary)' }} /> : <Upload size={18} style={{ color: 'var(--text-muted)' }} />}
-          <span style={{ fontSize: '0.8rem', fontWeight: '700' }}>{jobFile ? jobFile.name : "Upload JD Document (Optional)"}</span>
-          {jobFile && (
-            <button 
-              onClick={(e) => { e.stopPropagation(); onRemoveJobFile(); }} 
-              style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer' }}
-            >
-              ✕
-            </button>
-          )}
+    <div className="input-card">
+      <div className="input-header">
+        <div className="input-title">
+          <div className="logo-icon-container" style={{ padding: '6px' }}>
+            <Briefcase size={18} className="input-icon" />
+          </div>
+          <div>
+            <div style={{ fontSize: '1rem', fontWeight: '700' }}>Job Description</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>PDF or TXT</div>
+          </div>
+        </div>
+        
+        <div className="input-toggle">
+          <button 
+            className={`toggle-btn ${mode === 'file' ? 'active' : ''}`}
+            onClick={() => setMode('file')}
+          >
+            File
+          </button>
+          <button 
+            className={`toggle-btn ${mode === 'text' ? 'active' : ''}`}
+            onClick={() => setMode('text')}
+          >
+            Text
+          </button>
         </div>
       </div>
-
-      {!jobFile && (
+      
+      {mode === 'file' ? (
+        <div 
+          className="upload-zone"
+          onClick={() => !jobFile && document.getElementById('job-upload').click()}
+          style={{ borderColor: jobFile ? 'var(--primary)' : 'rgba(255, 255, 255, 0.2)' }}
+        >
+          <input 
+            id="job-upload" 
+            type="file" 
+            onChange={(e) => onJobFileChange(e.target.files[0])} 
+            style={{ display: 'none' }} 
+            accept=".pdf,.txt" 
+          />
+          {jobFile ? (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+              <div className="logo-icon-container"><Briefcase size={24} className="input-icon" /></div>
+              <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>{jobFile.name}</span>
+              <button 
+                onClick={(e) => { e.stopPropagation(); onRemoveJobFile(); }} 
+                style={{ background: 'none', border: 'none', color: 'var(--error)', cursor: 'pointer' }}
+              >
+                Remove File
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="logo-icon-container" style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--text-muted)' }}>
+                <Upload size={24} />
+              </div>
+              <div>
+                <span style={{ fontWeight: '600' }}>Drop your JD</span> <span style={{ color: 'var(--text-muted)' }}>or click to browse</span>
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>PDF or TXT · up to ~10MB</div>
+            </>
+          )}
+        </div>
+      ) : (
         <textarea 
           className="job-textarea"
-          style={{ height: '140px' }}
           value={jobDescription}
           onChange={(e) => onDescriptionChange(e.target.value)}
-          placeholder="Or paste the job description text here..."
+          placeholder="Paste the job description here..."
         />
       )}
     </div>
@@ -54,3 +82,4 @@ const JobDescriptionInput = ({ jobFile, jobDescription, onJobFileChange, onRemov
 };
 
 export default JobDescriptionInput;
+

@@ -1,39 +1,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BrainCircuit } from 'lucide-react';
+import { ScanLine, ShieldCheck, Sparkles } from 'lucide-react';
 
-const Header = () => {
+const Header = ({ onStartClick, currentView }) => {
+  const isLanding = currentView === 'landing';
+
   return (
-    <header className="title-section">
-      <motion.div 
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        style={{ 
-          display: 'inline-flex', 
-          padding: '8px 20px', 
-          borderRadius: '50px', 
-          background: 'rgba(14, 165, 233, 0.1)', 
-          border: '1px solid rgba(14, 165, 233, 0.2)',
-          color: 'var(--accent-blue)',
-          fontWeight: 'bold',
-          fontSize: '0.8rem',
-          marginBottom: '20px',
-          alignItems: 'center',
-          gap: '8px'
-        }}
+    <nav className="top-nav">
+      <div
+        className="nav-logo"
+        onClick={isLanding ? onStartClick : undefined}
+        style={{ cursor: isLanding ? 'pointer' : 'default', visibility: isLanding ? 'visible' : 'hidden' }}
       >
-        <BrainCircuit size={16} />
-        AI RESUME MATCHER
-      </motion.div>
-      
-      <h1 className="gradient-text">
-        AI <span style={{ color: '#fff' }}>Matcher</span>
-      </h1>
-      <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '20px auto' }}>
-        Level up with instant AI audits and resume optimization — 100% free.
-      </p>
-    </header>
+        <div className="logo-icon-container">
+          <ScanLine size={22} className="logo-icon" />
+        </div>
+        <div className="logo-text">
+          <span className="logo-title">Career Lens AI</span>
+          <span className="logo-subtitle">AI Resume Matcher</span>
+        </div>
+      </div>
+    </nav>
   );
 };
 
 export default Header;
+
