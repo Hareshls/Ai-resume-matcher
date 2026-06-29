@@ -788,8 +788,10 @@ Return a JSON object with EXACTLY these fields (no additions, no omissions):
             raise HTTPException(status_code=429, detail="Your daily AI tokens have been completed. Please try again later.")
         elif "decommissioned" in error_msg.lower():
             raise HTTPException(status_code=400, detail="The AI model is decommissioned. Please update the model in main.py.")
+        elif "organization_restricted" in error_msg.lower() or "restricted" in error_msg.lower():
+            raise HTTPException(status_code=403, detail="Your Groq API key's organization has been restricted. Please check your Groq account or provide a new API key in the .env file.")
         else:
-            raise HTTPException(status_code=500, detail="Analysis failed. Please try again.")
+            raise HTTPException(status_code=500, detail=f"Analysis failed. Please try again. Details: {error_msg}")
 
 
 # ==============================================================================

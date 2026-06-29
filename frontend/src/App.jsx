@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
+import {
   AlertCircle, RefreshCcw, Sparkles, Zap, Play, CheckCircle, FileText, Code, BarChart2
 } from 'lucide-react';
 
@@ -19,7 +19,7 @@ import demoVideo from './assets/Recording 2026-06-18 162951 - Trim.mp4';
 
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
   ? 'http://localhost:8000'
-  : 'https://ai-resume-matcher-backend-0boz.onrender.com';
+  : 'https://ai-resume-matcher-backend-cddr.onrender.com';
 
 const App = () => {
   const [file, setFile] = useState(null);
@@ -85,7 +85,7 @@ const App = () => {
   return (
     <div className={`app-container${isLandingMode ? ' landing-mode' : ''}${isLandingWide ? ' landing-wide' : ''}${currentView === 'results' ? ' results-mode' : ''}`}>
       <div className="grid-background"></div>
-      
+
       <Header onStartClick={() => navigateToInputs()} currentView={currentView} />
 
       <main style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
@@ -112,11 +112,11 @@ const App = () => {
                   <div className="hero-badge">
                     <span className="badge-dot"></span> Three-pass AI rubric · powered by LLaMA 3.3
                   </div>
-                  
+
                   <h1 className="hero-title">
                     Know exactly where your resume stands <span className="text-gradient-cyan">before you apply.</span>
                   </h1>
-                  
+
                   <p className="hero-subtitle">
                     Career Lens AI reads your resume and the job description, runs a strict inventory &rarr; gap analysis &rarr; scoring rubric, and hands back a match score, skill gaps, tailored bullets, alternative roles, and interview questions.
                   </p>
@@ -141,7 +141,7 @@ const App = () => {
                     <div className="orbit-ring ring-1"></div>
                     <div className="orbit-ring ring-2"></div>
                     <div className="orbit-ring ring-3"></div>
-                    
+
                     <div className="score-card-center">
                       <div className="score-label">MATCH SCORE</div>
                       <div className="score-value">87</div>
@@ -151,7 +151,7 @@ const App = () => {
                       </div>
                       <div className="score-badge-bottom">+12 skills</div>
                     </div>
-                    
+
                     <div className="orbit-dot dot-react">React</div>
                     <div className="orbit-dot dot-python">Python</div>
                     <div className="orbit-dot dot-sql">SQL</div>
@@ -176,13 +176,13 @@ const App = () => {
               </div>
 
               <div className="inputs-grid">
-                <ResumeInput 
-                  file={file} 
-                  onFileChange={(f) => { setFile(f); setError(''); }} 
-                  onRemoveFile={() => setFile(null)} 
+                <ResumeInput
+                  file={file}
+                  onFileChange={(f) => { setFile(f); setError(''); }}
+                  onRemoveFile={() => setFile(null)}
                 />
 
-                <JobDescriptionInput 
+                <JobDescriptionInput
                   jobFile={jobFile}
                   jobDescription={jobDescription}
                   onJobFileChange={setJobFile}
@@ -201,8 +201,8 @@ const App = () => {
                 <button className="btn-dark" onClick={handleLoadSampleData}>
                   <Sparkles size={16} /> Load sample data
                 </button>
-                <button 
-                  className="btn-cyan btn-large" 
+                <button
+                  className="btn-cyan btn-large"
                   onClick={handleMatch}
                   disabled={loading}
                 >
@@ -214,8 +214,8 @@ const App = () => {
           )}
 
           {currentView === 'results' && result && (
-            <motion.div 
-              key="result-view" 
+            <motion.div
+              key="result-view"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="results-view-container"
